@@ -132,6 +132,8 @@ export interface ChecklistItem {
   userId: string;
   dateKey: string;
   label: string;
+  /** Ex.: "14:00" ou "14h–16h" */
+  timeLabel?: string;
   done: boolean;
   order: number;
   createdAt: Timestamp;

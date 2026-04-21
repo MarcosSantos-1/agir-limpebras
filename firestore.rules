@@ -55,7 +55,15 @@ service cloud.firestore {
 
     match /checklist_items/{id} {
       allow read: if signedIn() && resource.data.userId == request.auth.uid;
-      allow create: if signedIn() && request.resource.data.userId == request.auth.uid;
+      allow create: if signedIn()
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.dateKey is string
+        && request.resource.data.label is string
+        && request.resource.data.order is int
+        && request.resource.data.done is bool
+        && request.resource.data.createdAt is timestamp
+        && (!('timeLabel' in request.resource.data)
+            || request.resource.data.timeLabel is string);
       allow update, delete: if signedIn() && resource.data.userId == request.auth.uid;
     }
   }
